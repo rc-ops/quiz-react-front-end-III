@@ -1,13 +1,12 @@
 import React, { useState, useRef } from 'react'
-import Answers from './Answers'
+import Score from './Score';
 
 const Quiz = () => {
-    const [useAnswers, setUserAnswers] = useState([]);
-    const [score, setScore] = useState(0);
+    const [userAnswers, setUserAnswers] = useState([]);
     const [showScore, setShowScore] = useState(false);
 
     const handleChooseAnswerClick = (answer, buttonClass) => {
-        setUserAnswers([...useAnswers, answer]);
+        setUserAnswers([...userAnswers, answer]);
         console.log("Resposta: " + answer);
 
         const buttons = document.querySelectorAll("." + buttonClass);
@@ -15,12 +14,12 @@ const Quiz = () => {
     }
 
     const handleFinishQuizClick = () => {
-        if (useAnswers.length < questions.length) {
+        if (userAnswers.length < questions.length) {
             alert("Por favor responda todas as questões antes de finalizar.")
             return;
-        } else {
-            setShowScore(true);
         }
+        setShowScore(true);
+
     }
 
     const questions = [
@@ -56,65 +55,36 @@ const Quiz = () => {
 
 
     return (
-        <>
-            <div className="cabecalho">
-                <h1>Quiz de front-end</h1>
-            </div>
-
-            <div className="perguntas">
-                <h2>#1 - O que é front-end?</h2>
-                <p>a) Parte de um sistema que é oculta para o usuário <button className='botao1' onClick={() => { handleChooseAnswerClick("A", "botao1") }}>Escolher</button></p>
-                <p>b) Parte de um sistema que é visível e interativa para o usuário <button className="botao1" onClick={() => { handleChooseAnswerClick("B", "botao1") }}>Escolher</button></p>
-                <p>c) Parte lógica que recebe as regras de negócio <button className="botao1" onClick={() => { handleChooseAnswerClick("C", "botao1") }}>Escolher</button></p>
-                <p>d) Nenhuma das alternativas anteriores <button className="botao1" onClick={() => { handleChooseAnswerClick("D", "botao1") }}>Escolher</button></p>
-
-                <h2>#2 - O que é o React JS?</h2>
-                <p>a) Uma poderosa biblioteca JavaScript <button className='botao2' onClick={() => { handleChooseAnswerClick("A", "botao2") }}>Escolher</button></p>
-                <p>b) Uma linguagem de programação <button className='botao2' onClick={() => { handleChooseAnswerClick("A", "botao2") }}>Escolher</button></p>
-                <p>c) Um servidor de Cloud <button className='botao2' onClick={() => { handleChooseAnswerClick("A", "botao2") }}>Escolher</button></p>
-                <p>d) Todas as respostas anteriores <button className='botao2' onClick={() => { handleChooseAnswerClick("A", "botao2") }}>Escolher</button></p>
-
-
-                <h2>#3 - Quais são as principais tecnologias do mundo Front-end?</h2>
-                <p>a) Java, Golang e Python <button className='botao3' onClick={() => { handleChooseAnswerClick("A", "botao3") }}>Escolher</button></p>
-                <p>b) AWS, Google Cloud e Azure <button className='botao3' onClick={() => { handleChooseAnswerClick("A", "botao3") }}>Escolher</button></p>
-                <p>c) Kotlin, HTML e CSS <button className='botao3' onClick={() => { handleChooseAnswerClick("A", "botao3") }}>Escolher</button></p>
-                <p>d) HTML, CSS e JavaScript <button className='botao3' onClick={() => { handleChooseAnswerClick("A", "botao3") }}>Escolher</button></p>
-            </div>
-
-            <div className="finalizar">
-                <button onClick={handleFinishQuizClick}>Finalizar</button>
-            </div>
-
-
-        </>
-        /*         <>
-                    <div className='perguntas'>
-                        <h1>Quiz de Front-end</h1>
+        showScore ?
+            (<Score userAnswers = {userAnswers}/>)
+            : (
+                <>
+                    <div className="perguntas">
                         <h2>#1 - O que é front-end?</h2>
-                        <p>a) Parte de um sistema que é oculta para o usuário <button>Escolher</button></p>
-                        <p>b) Parte de um sistema que é visível e interativa para o usuário <button>Escolher</button></p>
-                        <p>c) Parte lógica que recebe as regras de negócio <button>Escolher</button></p>
-                        <p>d) Nenhuma das alternativas anteriores <button>Escolher</button></p>
-        
+                        <p>a) Parte de um sistema que é oculta para o usuário <button className='botao1' onClick={() => { handleChooseAnswerClick("A", "botao1") }}>Escolher</button></p>
+                        <p>b) Parte de um sistema que é visível e interativa para o usuário <button className="botao1" onClick={() => { handleChooseAnswerClick("B", "botao1") }}>Escolher</button></p>
+                        <p>c) Parte lógica que recebe as regras de negócio <button className="botao1" onClick={() => { handleChooseAnswerClick("C", "botao1") }}>Escolher</button></p>
+                        <p>d) Nenhuma das alternativas anteriores <button className="botao1" onClick={() => { handleChooseAnswerClick("D", "botao1") }}>Escolher</button></p>
+
                         <h2>#2 - O que é o React JS?</h2>
-                        <p>a) Uma poderosa biblioteca JavaScript <button>Escolher</button></p>
-                        <p>b) Uma linguagem de programação <button>Escolher</button></p>
-                        <p>c) Um servidor de Cloud <button>Escolher</button></p>
-                        <p>d) Todas as respostas anteriores <button>Escolher</button></p>
-        
+                        <p>a) Uma poderosa biblioteca JavaScript <button className='botao2' onClick={() => { handleChooseAnswerClick("A", "botao2") }}>Escolher</button></p>
+                        <p>b) Uma linguagem de programação <button className='botao2' onClick={() => { handleChooseAnswerClick("B", "botao2") }}>Escolher</button></p>
+                        <p>c) Um servidor de Cloud <button className='botao2' onClick={() => { handleChooseAnswerClick("C", "botao2") }}>Escolher</button></p>
+                        <p>d) Todas as respostas anteriores <button className='botao2' onClick={() => { handleChooseAnswerClick("D", "botao2") }}>Escolher</button></p>
+
+
                         <h2>#3 - Quais são as principais tecnologias do mundo Front-end?</h2>
-                        <p>a) Java, Golang e Python <button>Escolher</button></p>
-                        <p>b) AWS, Google Cloud e Azure <button>Escolher</button></p>
-                        <p>c) Kotlin, HTML e CSS <button>Escolher</button></p>
-                        <p>d) HTML, CSS e JavaScript <button>Escolher</button></p>
+                        <p>a) Java, Golang e Python <button className='botao3' onClick={() => { handleChooseAnswerClick("A", "botao3") }}>Escolher</button></p>
+                        <p>b) AWS, Google Cloud e Azure <button className='botao3' onClick={() => { handleChooseAnswerClick("B", "botao3") }}>Escolher</button></p>
+                        <p>c) Kotlin, HTML e CSS <button className='botao3' onClick={() => { handleChooseAnswerClick("C", "botao3") }}>Escolher</button></p>
+                        <p>d) HTML, CSS e JavaScript <button className='botao3' onClick={() => { handleChooseAnswerClick("D", "botao3") }}>Escolher</button></p>
                     </div>
-        
-                    <div className='respostas'>
-                        <Answers />
+
+                    <div className="finalizar">
+                        <button onClick={handleFinishQuizClick}>Finalizar</button>
                     </div>
-                </> */
+                </>
+            )
     )
 }
-
 export default Quiz
