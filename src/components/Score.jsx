@@ -21,7 +21,9 @@ const Score = ({ userAnswers }) => {
 
   return (
     <div>
-      <h1>Sua pontuação foi {pontuacaoFinal}</h1>
+      <h1>Você acertou {pontuacaoFinal} de {userAnswers.length}</h1>
+      <hr></hr>
+      <Gabarito answers={userAnswers} />
     </div>
   )
 }
